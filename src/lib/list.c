@@ -174,15 +174,27 @@ static void List_reverse(List *self, void *function) {
 }
 
 static void List_initialize(List *self) {
+	if (!self) goto err;
+
 	self->data = malloc(sizeof(void*));
 	memset(self->data, 0, sizeof(void*));
+	return;
+
+err:
+	printf("list should not be NULL.\n");
 	return;
 }
 
 static void List_destroy(List *self) {
+	if (!self) goto err;
+
 	if(self->data) free(self->data);
 	if(self->next) free(self->next);
 	memset(self, 0, sizeof(List));
+	return;
+
+err:
+	printf("list should not be NULL.\n");
 	return;
 }
 
@@ -193,7 +205,7 @@ static void List_destroy(List *self) {
 
 // TODO: Delete all the list recursively.
 static void ListHelper_destroy_list(ListHelper *self, List *list) {
-	if (!list) goto err;
+	if (!self || !list) goto err;
 
 	List *ptr = self->last(self, list);
 	while (ptr->prev) {
@@ -209,13 +221,21 @@ err:
 }
 
 static List *ListHelper_new_list(ListHelper *self) {
+	if (!self) goto err;
+
 	void *buf = malloc(sizeof(List));
 	List list = ListElements;
 	memcpy(buf, &list, sizeof(list));
 	return buf;
+
+err:
+	printf("self should not be NULL.\n");
+	return NULL;
 }
 
 static List *ListHelper_last(ListHelper *self, List *list) {
+	if (!self || !list) goto err;
+
 	List *ptr;
 	ptr = list;
 	while (ptr->next) {
@@ -223,9 +243,15 @@ static List *ListHelper_last(ListHelper *self, List *list) {
 	}
 
 	return ptr;
+
+err:
+	printf("self should not be NULL.\n");
+	return NULL;
 }
 
 static List *ListHelper_find_by_tag(ListHelper *self, List *list, int tag) {
+	if (!self || !list) goto err;
+
 	List *ptr;
 	ptr = list;
 
@@ -235,11 +261,21 @@ static List *ListHelper_find_by_tag(ListHelper *self, List *list, int tag) {
 		continue;
 	}
 	return ptr;
+
+err:
+	printf("self should not be NULL.\n");
+	return NULL;
 }
 
 static void ListHelper_destroy(ListHelper *self) {
+	if (!self) goto err;
+
 	memset(self, 0, sizeof(ListHelper));
 	free(self);
+	return;
+
+err:
+	printf("self should not be NULL.\n");
 	return;
 }
 
