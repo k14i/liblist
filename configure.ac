@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT([liblist], [0.1.0], [keithseahus &#64; google.com])
+AC_INIT([liblist], [0.1.0], [keithseahus at gmail.com])
 AC_CONFIG_SRCDIR([config.h.in])
 AC_CONFIG_HEADERS([config.h])
 
