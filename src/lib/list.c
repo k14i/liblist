@@ -112,6 +112,8 @@ static void List_add_with_tag(List *self, void *target, int tag) {
 }
 
 static int List_terminate(List *self) {
+	if (self->prev) goto err;
+
 	void *buf = malloc(sizeof(List));
 	List list = ListElements;
 	memcpy(buf, &list, sizeof(list));
@@ -119,6 +121,10 @@ static int List_terminate(List *self) {
 
 	list.destroy(&list);
 	return 0;
+
+err:
+	printf("self->prev should be NULL.\n");
+	return 1;
 }
 
 static void List_dump(List *self, List *list) {
