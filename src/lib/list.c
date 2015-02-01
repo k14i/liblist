@@ -293,8 +293,13 @@ err:
 
 ListHelper *newListHelper() {
 	void *buf = malloc(sizeof(ListHelper));
+	if (!buf) goto err;
+
 	ListHelper list_helper = ListHelperElements;
 	memcpy(buf, &list_helper, sizeof(list_helper));
 	return buf;
+
+err:
+	return NULL;
 }
 
