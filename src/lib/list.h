@@ -22,42 +22,43 @@
 #ifndef LIBLIST_H
 #define LIBLIST_H
 
+#define LIBLIST_RETVAL_SUCCESS 0
+#define LIBLIST_RETVAL_FAILED  1
 
 /*
  * Member method type definition with standard types in C
  */
 
-typedef void (*Member_void_0)(void*);
-typedef int  (*Member_int_0)(void*);
-typedef void (*Member_void_1_void)(void*, void*);
-typedef void (*Member_void_1_int)(void*, int);
-typedef void (*Member_void_2_void_int)(void*, void*, int);
-typedef void (*Member_void_2_void_void)(void*, void*, void*);
+typedef int (*Member_int_0)(void*);
+typedef int (*Member_int_1_void)(void*, void*);
+typedef int (*Member_int_1_int)(void*, int);
+typedef int (*Member_int_2_void_int)(void*, void*, int);
+typedef int (*Member_int_2_void_void)(void*, void*, void*);
 
 
 /*
  * List Object
  */
 
-typedef void (*Member_void_1_List)(void*, void*);
+typedef int (*Member_int_1_List)(void*, void*);
 
 typedef struct
 {
-	void                     *data;
-	void                     *next;
-	void                     *prev;
-	int                      tag;
-	Member_void_1_List       append;
-	Member_void_1_List       add;
-	Member_void_1_int        set_tag;
-	Member_void_1_int        add_tag;
-	Member_void_2_void_int   add_with_tag;
-	Member_int_0             terminate;
-	Member_void_1_List       dump;
-	Member_void_2_void_void  foreach;
-	Member_void_1_void       reverse;
-	Member_void_0            initialize;
-	Member_void_0            destroy;
+	void                    *data;
+	void                    *next;
+	void                    *prev;
+	int                     tag;
+	Member_int_1_List       append;
+	Member_int_1_List       add;
+	Member_int_1_int        set_tag;
+	Member_int_1_int        add_tag;
+	Member_int_2_void_int   add_with_tag;
+	Member_int_0            terminate;
+	Member_int_1_List       dump;
+	Member_int_2_void_void  foreach;
+	Member_int_1_void       reverse;
+	Member_int_0            initialize;
+	Member_int_0            destroy;
 } List;
 
 #define ListElements {							\
@@ -86,11 +87,11 @@ typedef List *(*Member_List_1_List)(void*, List *list);
 
 typedef struct
 {
-	Member_void_1_List      destroy_list;
+	Member_int_1_List       destroy_list;
 	Member_List_0           new_list;
 	Member_List_2_List_int  find_by_tag;
 	Member_List_1_List      last;
-	Member_void_0           destroy;
+	Member_int_0            destroy;
 } ListHelper;
 
 #define ListHelperElements {					\

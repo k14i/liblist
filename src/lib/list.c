@@ -31,20 +31,20 @@
  * List Object
  */
 
-static void List_append(List *self, List *target);
-static void List_add(List *self, List *target);
-static void List_set_tag(List *self, int tag);
-static void List_add_tag(List *self, int tag);
-static void List_add_with_tag(List *self, void *target, int tag);
-static int  List_terminate(List *self);
-static void List_dump(List *self, List *list);
-static void List_foreach(List *self, void *function, void *arg);
-static void List_reverse(List *self, void *function);
-static void List_initialize(List *self);
-static void List_destroy(List *self);
+static int List_append(List *self, List *target);
+static int List_add(List *self, List *target);
+static int List_set_tag(List *self, int tag);
+static int List_add_tag(List *self, int tag);
+static int List_add_with_tag(List *self, void *target, int tag);
+static int List_terminate(List *self);
+static int List_dump(List *self, List *list);
+static int List_foreach(List *self, void *function, void *arg);
+static int List_reverse(List *self, void *function);
+static int List_initialize(List *self);
+static int List_destroy(List *self);
 
 
-static void List_append(List *self, List *target) {
+static int List_append(List *self, List *target) {
 	List *ptr;
 	List *ptr_prev;
 
@@ -62,33 +62,33 @@ static void List_append(List *self, List *target) {
 	ptr = ptr->next;
 	//ptr->prev = ptr_prev;
 	ptr->prev = self;
-	return;
+	return LIBLIST_RETVAL_SUCCESS;
 
 err:
 	printf("self->prev should be NULL.\n");
-	return;
+	return LIBLIST_RETVAL_FAILED;
 }
 
-static void List_add(List *self, List *target) {
+static int List_add(List *self, List *target) {
 	if (self->prev) goto err;
 
 	List list = ListElements;
 	list.initialize(&list);
 	memcpy(list.data, &target, sizeof(target));
 	self->append(self, &list);
-	return;
+	return LIBLIST_RETVAL_SUCCESS;
 
 err:
 	printf("self->prev should be NULL.\n");
-	return;
+	return LIBLIST_RETVAL_FAILED;
 }
 
-static void List_set_tag(List *self, int tag) {
+static int List_set_tag(List *self, int tag) {
 	self->tag = tag;
-	return;
+	return LIBLIST_RETVAL_SUCCESS;
 }
 
-static void List_add_tag(List *self, int tag) {
+static int List_add_tag(List *self, int tag) {
 	if (self->prev) goto err;
 
 	List *ptr;
@@ -98,17 +98,17 @@ static void List_add_tag(List *self, int tag) {
 	while(ptr->next) ptr = ptr->next;
 
 	self->set_tag(self, tag);
-	return;
+	return LIBLIST_RETVAL_SUCCESS;
 
 err:
 	printf("self->prev should be NULL.\n");
-	return;
+	return LIBLIST_RETVAL_FAILED;
 }
 
-static void List_add_with_tag(List *self, void *target, int tag) {
+static int List_add_with_tag(List *self, void *target, int tag) {
 	self->add(self, target);
 	self->add_tag(self, tag);
-	return;
+	return LIBLIST_RETVAL_SUCCESS;
 }
 
 static int List_terminate(List *self) {
@@ -120,27 +120,27 @@ static int List_terminate(List *self) {
 	self->append(self, &list);
 
 	list.destroy(&list);
-	return 0;
+	return LIBLIST_RETVAL_SUCCESS;
 
 err:
 	printf("self->prev should be NULL.\n");
-	return 1;
+	return LIBLIST_RETVAL_FAILED;
 }
 
-static void List_dump(List *self, List *list) {
+static int List_dump(List *self, List *list) {
 	if (!list) goto err;
 
 	printf("list(%p)->data(%p) is %s\n", list, list->data, (char *)list->data);
 	printf("list(%p)->prev is %p\n", list, list->prev);
 	printf("list(%p)->next is %p\n", list, list->next);
-	return;
+	return LIBLIST_RETVAL_SUCCESS;
 
 err:
 	printf("list should not be NULL.\n");
-	return;
+	return LIBLIST_RETVAL_FAILED;
 }
 
-static void List_foreach(List *self, void *function, void *arg) {
+static int List_foreach(List *self, void *function, void *arg) {
 	if (self->prev) goto err;
 
 	List *ptr;
@@ -157,14 +157,14 @@ static void List_foreach(List *self, void *function, void *arg) {
 		ptr = ptr->next;
 	}
 
-	return;
+	return LIBLIST_RETVAL_SUCCESS;
 
 err:
 	printf("self->prev should be NULL.\n");
-	return;
+	return LIBLIST_RETVAL_FAILED;
 }
 
-static void List_reverse(List *self, void *function) {
+static int List_reverse(List *self, void *function) {
 	/*
 	ListHelper *list_helper = newListHelper();
 	List *ptr = self;
@@ -182,32 +182,32 @@ static void List_reverse(List *self, void *function) {
 	ptr = ptr->prev;
 	}
 	//printf("======== %s ======== \n", __func__);*/
-	return;
+	return LIBLIST_RETVAL_SUCCESS;
 }
 
-static void List_initialize(List *self) {
+static int List_initialize(List *self) {
 	if (!self) goto err;
 
 	self->data = malloc(sizeof(void*));
 	memset(self->data, 0, sizeof(void*));
-	return;
+	return LIBLIST_RETVAL_SUCCESS;
 
 err:
 	printf("list should not be NULL.\n");
-	return;
+	return LIBLIST_RETVAL_FAILED;
 }
 
-static void List_destroy(List *self) {
+static int List_destroy(List *self) {
 	if (!self) goto err;
 
 	if(self->data) free(self->data);
 	if(self->next) free(self->next);
 	memset(self, 0, sizeof(List));
-	return;
+	return LIBLIST_RETVAL_SUCCESS;
 
 err:
 	printf("list should not be NULL.\n");
-	return;
+	return LIBLIST_RETVAL_FAILED;
 }
 
 
@@ -216,7 +216,7 @@ err:
  */
 
 // TODO: Delete all the list recursively.
-static void ListHelper_destroy_list(ListHelper *self, List *list) {
+static int ListHelper_destroy_list(ListHelper *self, List *list) {
 	if (!self || !list) goto err;
 
 	List *ptr = self->last(self, list);
@@ -225,11 +225,11 @@ static void ListHelper_destroy_list(ListHelper *self, List *list) {
 		ptr->destroy(ptr->next);
 	}
 	ptr->destroy(ptr);
-	return;
+	return LIBLIST_RETVAL_SUCCESS;
 
 err:
 	printf("list should not be NULL.\n");
-	return;
+	return LIBLIST_RETVAL_FAILED;
 }
 
 static List *ListHelper_new_list(ListHelper *self) {
@@ -279,16 +279,16 @@ err:
 	return NULL;
 }
 
-static void ListHelper_destroy(ListHelper *self) {
+static int ListHelper_destroy(ListHelper *self) {
 	if (!self) goto err;
 
 	memset(self, 0, sizeof(ListHelper));
 	free(self);
-	return;
+	return LIBLIST_RETVAL_SUCCESS;
 
 err:
 	printf("self should not be NULL.\n");
-	return;
+	return LIBLIST_RETVAL_FAILED;
 }
 
 ListHelper *newListHelper() {
