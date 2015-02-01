@@ -1,6 +1,6 @@
 /*
  *
- *  List
+ *  liblist
  *
  *    - Author: Keisuke TAKAHASHI <keithseahus &#64 gmail.com>
  *    - Site: https://github.com/keithseahus/.sandbox

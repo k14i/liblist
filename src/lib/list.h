@@ -1,6 +1,6 @@
 /*
  *
- *  List
+ *  liblist
  *
  *    - Author: Keisuke TAKAHASHI <keithseahus &#64 gmail.com>
  *    - Site: https://github.com/keithseahus/.sandbox
@@ -19,8 +19,8 @@
  *
 */
 
-#ifndef LIST_H
-#define LIST_H
+#ifndef LIBLIST_H
+#define LIBLIST_H
 
 
 /*
@@ -110,8 +110,8 @@ ListHelper *newListHelper();
  * Function Type Definition
  */
 
-#ifndef FUNC_TYPE
-#define FUNC_TYPE
+#ifndef LIBLIST_FUNC_TYPE
+#define LIBLIST_FUNC_TYPE
 
 typedef void (*Func_0)(void*, void*);
 typedef void (*Func_1)(void*, void*, void*);
