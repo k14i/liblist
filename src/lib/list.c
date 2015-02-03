@@ -39,7 +39,7 @@ static int List_add_with_tag(List *self, void *target, int tag);
 static int List_terminate(List *self);
 static int List_dump(List *self, List *list);
 static int List_foreach(List *self, void *function, void *arg);
-static int List_reverse(List *self, void *function);
+static int List_reverse(List *self);
 static int List_initialize(List *self);
 static int List_destroy(List *self);
 
@@ -164,7 +164,18 @@ err:
 	return LIBLIST_RETVAL_FAILED;
 }
 
-static int List_reverse(List *self, void *function) {
+static int List_reverse(List *self) {
+	ListHelper *list_helper = newListHelper();
+	/*
+	List *ptr;
+	ptr = list_helper->last(list_helper, list);
+	while (ptr->prev) {
+		//List list = list_helper->new_list(list_helper);
+		if (!ptr->next) {
+			ptr->next = ptr->prev;
+		}
+	}
+	*/
 	/*
 	ListHelper *list_helper = newListHelper();
 	List *ptr = self;
@@ -182,6 +193,7 @@ static int List_reverse(List *self, void *function) {
 	ptr = ptr->prev;
 	}
 	//printf("======== %s ======== \n", __func__);*/
+	list_helper->destroy(list_helper);
 	return LIBLIST_RETVAL_SUCCESS;
 }
 

@@ -56,7 +56,7 @@ typedef struct
 	Member_int_0            terminate;
 	Member_int_1_List       dump;
 	Member_int_2_void_void  foreach;
-	Member_int_1_void       reverse;
+	Member_int_0            reverse;
 	Member_int_0            initialize;
 	Member_int_0            destroy;
 } List;
