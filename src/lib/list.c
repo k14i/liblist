@@ -166,16 +166,19 @@ err:
 
 static int List_reverse(List *self) {
 	ListHelper *list_helper = newListHelper();
-	/*
 	List *ptr;
-	ptr = list_helper->last(list_helper, list);
-	while (ptr->prev) {
+	List *ptr_r;
+
+	ptr = list_helper->last(list_helper, self);
+	ptr_r = ptr;
+
+	while (ptr_r->prev) {
 		//List list = list_helper->new_list(list_helper);
-		if (!ptr->next) {
-			ptr->next = ptr->prev;
-		}
+		ptr->next = ptr_r->prev;
+		ptr = ptr->next;
+		ptr_r = ptr_r->prev;
 	}
-	*/
+	ptr->prev = NULL;
 	/*
 	ListHelper *list_helper = newListHelper();
 	List *ptr = self;
