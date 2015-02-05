@@ -171,31 +171,14 @@ static int List_reverse(List *self) {
 
 	ptr = list_helper->last(list_helper, self);
 	ptr_r = ptr;
-
 	while (ptr_r->prev) {
-		//List list = list_helper->new_list(list_helper);
+/*
 		ptr->next = ptr_r->prev;
 		ptr = ptr->next;
+*/
 		ptr_r = ptr_r->prev;
 	}
 	ptr->prev = NULL;
-	/*
-	ListHelper *list_helper = newListHelper();
-	List *ptr = self;
-	Func *fun = function;
-
-	//memcpy(ptr, self->last(self), sizeof(ptr));
-	//printf("ListHelper_last(&list_helper, ptr) is %p\n", ListHelper_last(&list_helper, ptr));
-	//printf("self->last(self) is %p\n", self->last(self));
-	//ptr = self->last(self);
-	ptr = ListHelper_last(list_helper, ptr);
-
-	for(int i=0; ptr->prev; i++) {
-	//printf("i = %d\n", i);
-	(*fun)(self, ptr);
-	ptr = ptr->prev;
-	}
-	//printf("======== %s ======== \n", __func__);*/
 	list_helper->destroy(list_helper);
 	self = ptr;
 	return LIBLIST_RETVAL_SUCCESS;

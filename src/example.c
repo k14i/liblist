@@ -139,6 +139,32 @@ clean_up_and_return:
 	return ret;
 }
 
+int test_reverse() {
+	int ret = 0;
+
+	ListHelper *list_helper = newListHelper();
+	List *list0 = list_helper->new_list(list_helper);
+	List *list1 = list_helper->new_list(list_helper);
+	list0->append(list0, list1);
+printf("list0 = %p\n", list0);
+printf("list1 = %p\n", list1);
+	ret = list0->reverse(list0);
+printf("list0 = %p\n", list0);
+printf("list1 = %p\n", list1);
+	if (ret != 0) goto err;
+
+	goto clean_up_and_return;
+
+err:
+	ret = 1;
+	goto clean_up_and_return;
+
+clean_up_and_return:
+	list_helper->destroy_list(list_helper, list0);
+	(void)list_helper->destroy(list_helper);
+	return ret;
+}
+
 int main(int argc, char *argv[]) {
 	int ret = 0;
 	int exit_status = 0;
@@ -167,6 +193,11 @@ int main(int argc, char *argv[]) {
 	ret = test_set_tag();
 	if (ret != 0) {
 		printf("ERROR in test_set_tag()\n");
+		goto err;
+	}
+	ret = test_reverse();
+	if (ret != 0) {
+		printf("ERROR in test_reverse()\n");
 		goto err;
 	}
 	printf("---- END main() ----\n");
