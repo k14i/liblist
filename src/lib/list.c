@@ -167,8 +167,9 @@ err:
 
 static int List_length(List *self) {
 	if (self->prev) goto err;
+	int len;
 
-	for (int len; self->next; len++);
+	for (len; self->next; len++);
 
 	return len;
 
