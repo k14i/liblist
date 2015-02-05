@@ -197,6 +197,7 @@ static int List_reverse(List *self) {
 	}
 	//printf("======== %s ======== \n", __func__);*/
 	list_helper->destroy(list_helper);
+	self = ptr;
 	return LIBLIST_RETVAL_SUCCESS;
 }
 
