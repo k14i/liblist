@@ -39,6 +39,7 @@ static int List_add_with_tag(List *self, void *target, int tag);
 static int List_terminate(List *self);
 static int List_dump(List *self, List *list);
 static int List_foreach(List *self, void *function, void *arg);
+static int List_length(List *self);
 static int List_reverse(List *self);
 static int List_initialize(List *self);
 static int List_destroy(List *self);
@@ -162,6 +163,18 @@ static int List_foreach(List *self, void *function, void *arg) {
 err:
 	printf("self->prev should be NULL.\n");
 	return LIBLIST_RETVAL_FAILED;
+}
+
+static int List_length(List *self) {
+	if (self->prev) goto err;
+
+	for (int len; self->next; len++);
+
+	return len;
+
+err:
+	printf("self->prev should be NULL.\n");
+	return -1;
 }
 
 static int List_reverse(List *self) {
