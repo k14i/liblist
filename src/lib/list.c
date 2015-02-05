@@ -167,9 +167,13 @@ err:
 
 static int List_length(List *self) {
 	if (self->prev) goto err;
-	int len;
 
-	for (len; self->next; len++);
+	List *ptr = self;
+	int len = 1;
+
+	for (len; ptr->next; len++) {
+		ptr = ptr->next;
+	}
 
 	return len;
 

@@ -139,6 +139,31 @@ clean_up_and_return:
 	return ret;
 }
 
+int test_length() {
+	int ret = 0;
+	int len = 0;
+
+	ListHelper *list_helper = newListHelper();
+	List *list0 = list_helper->new_list(list_helper);
+	List *list1 = list_helper->new_list(list_helper);
+	List *list2 = list_helper->new_list(list_helper);
+	list0->append(list0, list1);
+	list0->append(list0, list2);
+	len = list0->length(list0);
+	if (len != 3) goto err;
+
+	goto clean_up_and_return;
+
+err:
+	ret = 1;
+	goto clean_up_and_return;
+
+clean_up_and_return:
+	list_helper->destroy_list(list_helper, list0);
+	(void)list_helper->destroy(list_helper);
+	return ret;
+}
+
 int test_reverse() {
 	int ret = 0;
 
@@ -193,6 +218,11 @@ int main(int argc, char *argv[]) {
 	ret = test_set_tag();
 	if (ret != 0) {
 		printf("ERROR in test_set_tag()\n");
+		goto err;
+	}
+	ret = test_length();
+	if (ret != 0) {
+		printf("ERROR in test_length()\n");
 		goto err;
 	}
 	ret = test_reverse();
