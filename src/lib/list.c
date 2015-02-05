@@ -190,6 +190,8 @@ static int List_reverse(List *self) {
 	ptr = list_helper->last(list_helper, self);
 	ptr_r = ptr;
 	while (ptr_r->prev) {
+		printf("ptr = %p\n", ptr);
+		printf("ptr_r = %p\n", ptr_r);
 /*
 		ptr->next = ptr_r->prev;
 		ptr = ptr->next;

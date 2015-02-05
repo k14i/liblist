@@ -147,10 +147,12 @@ int test_length() {
 	List *list0 = list_helper->new_list(list_helper);
 	List *list1 = list_helper->new_list(list_helper);
 	List *list2 = list_helper->new_list(list_helper);
+	List *list3 = list_helper->new_list(list_helper);
 	list0->append(list0, list1);
 	list0->append(list0, list2);
+	list0->append(list0, list3);
 	len = list0->length(list0);
-	if (len != 3) goto err;
+	if (len != 4) goto err;
 
 	goto clean_up_and_return;
 
@@ -170,12 +172,16 @@ int test_reverse() {
 	ListHelper *list_helper = newListHelper();
 	List *list0 = list_helper->new_list(list_helper);
 	List *list1 = list_helper->new_list(list_helper);
+	List *list2 = list_helper->new_list(list_helper);
 	list0->append(list0, list1);
-printf("list0 = %p\n", list0);
-printf("list1 = %p\n", list1);
+	list0->append(list0, list2);
+printf("list0 = %p, list0->prev = %p, list0->next = %p\n", list0, list0->prev, list0->next);
+printf("list1 = %p, list1->prev = %p, list1->next = %p\n", list1, list1->prev, list1->next);
+printf("list2 = %p, list2->prev = %p, list2->next = %p\n", list2, list2->prev, list2->next);
 	ret = list0->reverse(list0);
-printf("list0 = %p\n", list0);
-printf("list1 = %p\n", list1);
+printf("list0 = %p, list0->prev = %p, list0->next = %p\n", list0, list0->prev, list0->next);
+printf("list1 = %p, list1->prev = %p, list1->next = %p\n", list1, list1->prev, list1->next);
+printf("list2 = %p, list2->prev = %p, list2->next = %p\n", list2, list2->prev, list2->next);
 	if (ret != 0) goto err;
 
 	goto clean_up_and_return;
