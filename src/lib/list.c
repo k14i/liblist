@@ -40,7 +40,6 @@ static int List_terminate(List *self);
 static int List_dump(List *self, List *list);
 static int List_foreach(List *self, void *function, void *arg);
 static int List_length(List *self);
-static int List_reverse(List *self);
 static int List_initialize(List *self);
 static int List_destroy(List *self);
 
@@ -182,28 +181,6 @@ err:
 	return -1;
 }
 
-static int List_reverse(List *self) {
-	ListHelper *list_helper = newListHelper();
-	List *ptr;
-	List *ptr_r;
-
-	ptr = list_helper->last(list_helper, self);
-	ptr_r = ptr;
-	while (ptr_r->prev) {
-		printf("ptr = %p\n", ptr);
-		printf("ptr_r = %p\n", ptr_r);
-/*
-		ptr->next = ptr_r->prev;
-		ptr = ptr->next;
-*/
-		ptr_r = ptr_r->prev;
-	}
-	ptr->prev = NULL;
-	list_helper->destroy(list_helper);
-	self = ptr;
-	return LIBLIST_RETVAL_SUCCESS;
-}
-
 static int List_initialize(List *self) {
 	if (!self) goto err;
 
@@ -295,6 +272,26 @@ static List *ListHelper_find_by_tag(ListHelper *self, List *list, int tag) {
 
 err:
 	printf("self should not be NULL.\n");
+	return NULL;
+}
+
+static List *ListHelper_reverse(ListHelper *self, List *list) {
+	if (!self || !list || list->prev) goto err;
+
+	List *list_next;
+	List *list_prev;
+
+	do {
+		list_prev  = list->prev;
+		list_next  = list->next;
+		list->next = list_prev;
+		list->prev = list_next;
+		if (list->prev) list = list->prev;
+	} while (list->prev);
+
+	return list;
+
+err:
 	return NULL;
 }
 

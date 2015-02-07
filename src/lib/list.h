@@ -57,7 +57,6 @@ typedef struct
 	Member_int_1_List       dump;
 	Member_int_2_void_void  foreach;
 	Member_int_0            length;
-	Member_int_0            reverse;
 	Member_int_0            initialize;
 	Member_int_0            destroy;
 } List;
@@ -73,7 +72,6 @@ typedef struct
 			(void*)&List_dump,					\
 			(void*)&List_foreach,				\
 			(void*)&List_length,				\
-			(void*)&List_reverse,				\
 			(void*)&List_initialize,			\
 			(void*)&List_destroy,				\
 }
@@ -92,6 +90,7 @@ typedef struct
 	Member_int_1_List       destroy_list;
 	Member_List_0           new_list;
 	Member_List_2_List_int  find_by_tag;
+	Member_List_1_List      reverse;
 	Member_List_1_List      last;
 	Member_int_0            destroy;
 } ListHelper;
@@ -100,6 +99,7 @@ typedef struct
 		(void*)&ListHelper_destroy_list,		\
 		(void*)&ListHelper_new_list,			\
 			(void*)&ListHelper_find_by_tag,		\
+			(void*)&ListHelper_reverse,			\
 			(void*)&ListHelper_last,			\
 			(void*)&ListHelper_destroy,			\
 }

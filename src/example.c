@@ -168,6 +168,7 @@ clean_up_and_return:
 
 int test_reverse() {
 	int ret = 0;
+	List *list;
 
 	ListHelper *list_helper = newListHelper();
 	List *list0 = list_helper->new_list(list_helper);
@@ -178,10 +179,8 @@ int test_reverse() {
 printf("list0 = %p, list0->prev = %p, list0->next = %p\n", list0, list0->prev, list0->next);
 printf("list1 = %p, list1->prev = %p, list1->next = %p\n", list1, list1->prev, list1->next);
 printf("list2 = %p, list2->prev = %p, list2->next = %p\n", list2, list2->prev, list2->next);
-	ret = list0->reverse(list0);
-printf("list0 = %p, list0->prev = %p, list0->next = %p\n", list0, list0->prev, list0->next);
-printf("list1 = %p, list1->prev = %p, list1->next = %p\n", list1, list1->prev, list1->next);
-printf("list2 = %p, list2->prev = %p, list2->next = %p\n", list2, list2->prev, list2->next);
+	list = list_helper->reverse(list_helper, list0);
+printf("list = %p, list->prev = %p, list->next = %p\n", list, list->prev, list->next);
 	if (ret != 0) goto err;
 
 	goto clean_up_and_return;
@@ -192,6 +191,7 @@ err:
 
 clean_up_and_return:
 	list_helper->destroy_list(list_helper, list0);
+	list_helper->destroy_list(list_helper, list);
 	(void)list_helper->destroy(list_helper);
 	return ret;
 }
