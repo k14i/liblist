@@ -3,7 +3,7 @@
  *  liblist
  *
  *    - Author: Keisuke TAKAHASHI <keithseahus &#64 gmail.com>
- *    - Site: https://github.com/keithseahus/.sandbox
+ *    - Site: https://github.com/keithseahus/liblist
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -60,7 +60,6 @@ static int List_append(List *self, List *target) {
 	ptr->next = target;
 
 	ptr = ptr->next;
-	//ptr->prev = ptr_prev;
 	ptr->prev = self;
 	return LIBLIST_RETVAL_SUCCESS;
 
@@ -148,10 +147,10 @@ static int List_foreach(List *self, void *function, void *arg) {
 
 	while (ptr->next) {
 		if(!arg) {
-			Func_0 *fun = function;
+			LibListFunc_0 *fun = function;
 			(*fun)(self, ptr);
 		} else {
-			Func_1 *fun = function;
+			LibListFunc_1 *fun = function;
 			(*fun)(self, ptr, arg);
 		}
 		ptr = ptr->next;
