@@ -191,7 +191,8 @@ err:
 
 clean_up_and_return:
 	list_helper->destroy_list(list_helper, list0);
-	list_helper->destroy_list(list_helper, list);
+	//list_helper->destroy_list(list_helper, list);
+printf("list_helper->destroy_list(list_helper, list), list = %p\n", list);
 	(void)list_helper->destroy(list_helper);
 	return ret;
 }

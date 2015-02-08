@@ -45,6 +45,8 @@ static int List_destroy(List *self);
 
 
 static int List_append(List *self, List *target) {
+	if (!self || self->prev || !target) goto err;
+
 	List *ptr;
 	List *ptr_prev;
 
@@ -69,7 +71,7 @@ err:
 }
 
 static int List_add(List *self, List *target) {
-	if (self->prev) goto err;
+	if (!self || self->prev || !target) goto err;
 
 	List list = ListElements;
 	list.initialize(&list);
@@ -88,7 +90,7 @@ static int List_set_tag(List *self, int tag) {
 }
 
 static int List_add_tag(List *self, int tag) {
-	if (self->prev) goto err;
+	if (!self || self->prev) goto err;
 
 	List *ptr;
 
@@ -105,13 +107,19 @@ err:
 }
 
 static int List_add_with_tag(List *self, void *target, int tag) {
+	if (!self || self->prev || !target) goto err;
+
 	self->add(self, target);
 	self->add_tag(self, tag);
 	return LIBLIST_RETVAL_SUCCESS;
+
+err:
+	printf("self->prev should be NULL.\n");
+	return LIBLIST_RETVAL_FAILED;
 }
 
 static int List_terminate(List *self) {
-	if (self->prev) goto err;
+	if (!self || self->prev) goto err;
 
 	void *buf = malloc(sizeof(List));
 	List list = ListElements;
@@ -127,7 +135,7 @@ err:
 }
 
 static int List_dump(List *self, List *list) {
-	if (!list) goto err;
+	if (!self || !list) goto err;
 
 	printf("list(%p)->data(%p) is %s\n", list, list->data, (char *)list->data);
 	printf("list(%p)->prev is %p\n", list, list->prev);
@@ -140,7 +148,7 @@ err:
 }
 
 static int List_foreach(List *self, void *function, void *arg) {
-	if (self->prev) goto err;
+	if (!self || self->prev || !function) goto err;
 
 	List *ptr;
 	ptr = self;
@@ -164,7 +172,7 @@ err:
 }
 
 static int List_length(List *self) {
-	if (self->prev) goto err;
+	if (!self || self->prev) goto err;
 
 	List *ptr = self;
 	int len = 1;
