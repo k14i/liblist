@@ -48,7 +48,7 @@ typedef struct
 	void                           *next;
 	void                           *prev;
 	int                            tag;
-	LibListMethod_int_1_List       append;
+	LibListMethod_int_1_List       join;
 	LibListMethod_int_1_List       add;
 	LibListMethod_int_1_int        set_tag;
 	LibListMethod_int_1_int        add_tag;
@@ -63,7 +63,7 @@ typedef struct
 
 #define ListElements {							\
 		NULL, NULL, NULL, 0,					\
-		(void*)&List_append,					\
+		(void*)&List_join,					\
 			(void*)&List_add,					\
 			(void*)&List_set_tag,				\
 			(void*)&List_add_tag,				\

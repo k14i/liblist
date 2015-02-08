@@ -6,13 +6,13 @@
 
 #define TIMES 1
 
-int test_append() {
+int test_join() {
 	int ret = 0;
 
 	ListHelper *list_helper = newListHelper();
 	List *list0 = list_helper->new_list(list_helper);
 	List *list1 = list_helper->new_list(list_helper);
-	list0->append(list0, list1);
+	list0->join(list0, list1);
 
 	List *last = list_helper->last(list_helper, list0);
 
@@ -89,8 +89,8 @@ int test_foreach() {
 	List *list0 = list_helper->new_list(list_helper);
 	List *list1 = list_helper->new_list(list_helper);
 	List *list2 = list_helper->new_list(list_helper);
-	list0->append(list0, list1);
-	list0->append(list0, list2);
+	list0->join(list0, list1);
+	list0->join(list0, list2);
 
 	list0->foreach(list0, &(list0->dump), NULL);
 
@@ -148,9 +148,9 @@ int test_length() {
 	List *list1 = list_helper->new_list(list_helper);
 	List *list2 = list_helper->new_list(list_helper);
 	List *list3 = list_helper->new_list(list_helper);
-	list0->append(list0, list1);
-	list0->append(list0, list2);
-	list0->append(list0, list3);
+	list0->join(list0, list1);
+	list0->join(list0, list2);
+	list0->join(list0, list3);
 	len = list0->length(list0);
 	if (len != 4) goto err;
 
@@ -174,8 +174,8 @@ int test_reverse() {
 	List *list0 = list_helper->new_list(list_helper);
 	List *list1 = list_helper->new_list(list_helper);
 	List *list2 = list_helper->new_list(list_helper);
-	list0->append(list0, list1);
-	list0->append(list0, list2);
+	list0->join(list0, list1);
+	list0->join(list0, list2);
 printf("list0 = %p, list0->prev = %p, list0->next = %p\n", list0, list0->prev, list0->next);
 printf("list1 = %p, list1->prev = %p, list1->next = %p\n", list1, list1->prev, list1->next);
 printf("list2 = %p, list2->prev = %p, list2->next = %p\n", list2, list2->prev, list2->next);
@@ -217,9 +217,9 @@ int main(int argc, char *argv[]) {
 		printf("ERROR in test_foreach()\n");
 		goto err;
 	}
-	ret = test_append();
+	ret = test_join();
 	if (ret != 0) {
-		printf("ERROR in test_append()\n");
+		printf("ERROR in test_join()\n");
 		goto err;
 	}
 	ret = test_set_tag();

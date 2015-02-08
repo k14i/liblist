@@ -31,7 +31,7 @@
  * List Object
  */
 
-static int List_append(List *self, List *target);
+static int List_join(List *self, List *target);
 static int List_add(List *self, List *target);
 static int List_set_tag(List *self, int tag);
 static int List_add_tag(List *self, int tag);
@@ -44,7 +44,7 @@ static int List_initialize(List *self);
 static int List_destroy(List *self);
 
 
-static int List_append(List *self, List *target) {
+static int List_join(List *self, List *target) {
 	if (!self || self->prev || !target) goto err;
 
 	List *ptr;
@@ -76,7 +76,7 @@ static int List_add(List *self, List *target) {
 	List list = ListElements;
 	list.initialize(&list);
 	memcpy(list.data, &target, sizeof(target));
-	self->append(self, &list);
+	self->join(self, &list);
 	return LIBLIST_RETVAL_SUCCESS;
 
 err:
@@ -124,7 +124,7 @@ static int List_terminate(List *self) {
 	void *buf = malloc(sizeof(List));
 	List list = ListElements;
 	memcpy(buf, &list, sizeof(list));
-	self->append(self, &list);
+	self->join(self, &list);
 
 	list.destroy(&list);
 	return LIBLIST_RETVAL_SUCCESS;
