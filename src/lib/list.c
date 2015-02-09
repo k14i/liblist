@@ -73,10 +73,14 @@ err:
 static int List_add(List *self, List *target) {
 	if (!self || self->prev || !target) goto err;
 
+	int ret = 0;
+
 	List list = ListElements;
 	list.initialize(&list);
 	memcpy(list.data, &target, sizeof(target));
-	self->join(self, &list);
+	ret = self->join(self, &list);
+	if (ret != LIBLIST_RETVAL_SUCCESS) goto err;
+
 	return LIBLIST_RETVAL_SUCCESS;
 
 err:
@@ -109,8 +113,14 @@ err:
 static int List_add_with_tag(List *self, void *target, int tag) {
 	if (!self || self->prev || !target) goto err;
 
-	self->add(self, target);
-	self->add_tag(self, tag);
+	int ret = 0;
+
+	ret = self->add(self, target);
+	if (ret != LIBLIST_RETVAL_SUCCESS) goto err;
+
+	ret = self->add_tag(self, tag);
+	if (ret != LIBLIST_RETVAL_SUCCESS) goto err;
+
 	return LIBLIST_RETVAL_SUCCESS;
 
 err:
@@ -121,12 +131,15 @@ err:
 static int List_terminate(List *self) {
 	if (!self || self->prev) goto err;
 
+	int ret = 0;
+
 	void *buf = malloc(sizeof(List));
 	List list = ListElements;
 	memcpy(buf, &list, sizeof(list));
-	self->join(self, &list);
-
+	ret = self->join(self, &list);
 	list.destroy(&list);
+	if (ret != LIBLIST_RETVAL_SUCCESS) goto err;
+
 	return LIBLIST_RETVAL_SUCCESS;
 
 err:
