@@ -293,10 +293,16 @@ err:
 }
 
 static List *ListHelper_head(ListHelper *self, List *list) {
+	if (!self || !list) goto err;
+
 	List *ptr = list;
 	while (ptr->prev) ptr = ptr->prev;
 
 	return ptr;
+
+err:
+	printf("self or list should not be NULL.\n");
+	return NULL;
 }
 
 static List *ListHelper_last(ListHelper *self, List *list) {
