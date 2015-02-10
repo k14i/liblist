@@ -47,8 +47,8 @@ static int List_destroy(List *self);
 static int List_join(List *self, List *target) {
 	if (!self || self->prev || !target) goto err;
 
-	List *ptr;
-	List *ptr_prev;
+	List *ptr      = NULL;
+	List *ptr_prev = NULL;
 
 	ptr = self;
 
@@ -57,6 +57,7 @@ static int List_join(List *self, List *target) {
 	while (ptr->next) {
 		ptr_prev = ptr;
 		ptr = ptr->next;
+		ptr->prev = ptr_prev;
 	}
 
 	ptr->next = target;
@@ -96,9 +97,7 @@ static int List_set_tag(List *self, int tag) {
 static int List_add_tag(List *self, int tag) {
 	if (!self || self->prev) goto err;
 
-	List *ptr;
-
-	ptr = self;
+	List *ptr = self;
 
 	while(ptr->next) ptr = ptr->next;
 
@@ -163,8 +162,7 @@ err:
 static int List_foreach(List *self, void *function, void *arg) {
 	if (!self || self->prev || !function) goto err;
 
-	List *ptr;
-	ptr = self;
+	List *ptr = self;
 
 	while (ptr->next) {
 		if(!arg) {
@@ -231,6 +229,14 @@ err:
  * ListHelper Object
  */
 
+static int ListHelper_destroy_list(ListHelper *self, List *list);
+static List *ListHelper_new_linked_list(ListHelper *self, int size);
+static List *ListHelper_new_list(ListHelper *self);
+static List *ListHelper_last(ListHelper *self, List *list);
+static List *ListHelper_find_by_tag(ListHelper *self, List *list, int tag);
+static List *ListHelper_reverse(ListHelper *self, List *list);
+static int ListHelper_destroy(ListHelper *self);
+
 // TODO: Delete all the list recursively.
 static int ListHelper_destroy_list(ListHelper *self, List *list) {
 	if (!self || !list) goto err;
@@ -246,6 +252,30 @@ static int ListHelper_destroy_list(ListHelper *self, List *list) {
 err:
 	printf("list should not be NULL.\n");
 	return LIBLIST_RETVAL_FAILED;
+}
+
+static List *ListHelper_new_linked_list(ListHelper *self, int size) {
+	if (!self || size < 1) goto err;
+
+	List *list = NULL;
+	List *head = NULL;
+	List *buf  = NULL;
+
+	for (int i = 0; i < size; i++) {
+		buf = self->new_list(self);
+		if (!head) head = buf;
+		if (!list) {
+			list = buf;
+		} else {
+			list->join(list, buf);
+		}
+	}
+
+	return head;
+
+err:
+	printf("self should not be NULL and size should not lower than 1.\n");
+	return NULL;
 }
 
 static List *ListHelper_new_list(ListHelper *self) {
@@ -264,8 +294,7 @@ err:
 static List *ListHelper_last(ListHelper *self, List *list) {
 	if (!self || !list) goto err;
 
-	List *ptr;
-	ptr = list;
+	List *ptr = list;
 	while (ptr->next) {
 		ptr = ptr->next;
 	}
@@ -280,8 +309,7 @@ err:
 static List *ListHelper_find_by_tag(ListHelper *self, List *list, int tag) {
 	if (!self || !list) goto err;
 
-	List *ptr;
-	ptr = list;
+	List *ptr = list;
 
 	while (ptr->next) {
 		if(ptr->tag == tag) break;
@@ -298,8 +326,8 @@ err:
 static List *ListHelper_reverse(ListHelper *self, List *list) {
 	if (!self || !list || list->prev) goto err;
 
-	List *list_next;
-	List *list_prev;
+	List *list_next = NULL;
+	List *list_prev = NULL;
 
 	do {
 		list_prev  = list->prev;

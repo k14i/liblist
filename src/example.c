@@ -6,6 +6,38 @@
 
 #define TIMES 1
 
+int test_new_linked_list() {
+	int ret = 0;
+
+	ListHelper *list_helper = newListHelper();
+	List *ptr = NULL;
+	List *list = list_helper->new_linked_list(list_helper, 5);
+	ptr = list;
+	if (!list) goto err;
+	printf("list = %p, ptr = %p, ptr->prev = %p, ptr->next = %p\n", list, ptr, ptr->prev, ptr->next);
+	ptr = ptr->next;
+	printf("list = %p, ptr = %p, ptr->prev = %p, ptr->next = %p\n", list, ptr, ptr->prev, ptr->next);
+	ptr = ptr->next;
+	printf("list = %p, ptr = %p, ptr->prev = %p, ptr->next = %p\n", list, ptr, ptr->prev, ptr->next);
+	ptr = ptr->next;
+	printf("list = %p, ptr = %p, ptr->prev = %p, ptr->next = %p\n", list, ptr, ptr->prev, ptr->next);
+	ptr = ptr->next;
+	printf("list = %p, ptr = %p, ptr->prev = %p, ptr->next = %p\n", list, ptr, ptr->prev, ptr->next);
+	if (ptr->next) goto err;
+
+	goto clean_up_and_return;
+
+err:
+	ret = 1;
+	goto clean_up_and_return;
+
+clean_up_and_return:
+	list_helper->destroy_list(list_helper, list);
+	printf("list = %p\n", list);
+	(void)list_helper->destroy(list_helper);
+	return ret;
+}
+
 int test_join() {
 	int ret = 0;
 
@@ -202,6 +234,11 @@ int main(int argc, char *argv[]) {
 	int exit_status = 0;
 
 	printf("---- BEGIN main() ----\n");
+	ret = test_new_linked_list();
+	if (ret != 0) {
+		printf("ERROR in test_new_linked_list()\n");
+		goto err;
+	}
 	ret = test_destroy_list();
 	if (ret != 0) {
 		printf("ERROR in test_destroy_list()\n");
