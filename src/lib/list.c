@@ -232,6 +232,7 @@ err:
 static int ListHelper_destroy_list(ListHelper *self, List *list);
 static List *ListHelper_new_linked_list(ListHelper *self, int size);
 static List *ListHelper_new_list(ListHelper *self);
+static List *ListHelper_head(ListHelper *self, List *list);
 static List *ListHelper_last(ListHelper *self, List *list);
 static List *ListHelper_find_by_tag(ListHelper *self, List *list, int tag);
 static List *ListHelper_reverse(ListHelper *self, List *list);
@@ -289,6 +290,13 @@ static List *ListHelper_new_list(ListHelper *self) {
 err:
 	printf("self should not be NULL.\n");
 	return NULL;
+}
+
+static List *ListHelper_head(ListHelper *self, List *list) {
+	List *ptr = list;
+	while (ptr->prev) ptr = ptr->prev;
+
+	return ptr;
 }
 
 static List *ListHelper_last(ListHelper *self, List *list) {

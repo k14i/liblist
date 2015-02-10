@@ -93,6 +93,7 @@ typedef struct
 	LibListMethod_List_0           new_list;
 	LibListMethod_List_2_List_int  find_by_tag;
 	LibListMethod_List_1_List      reverse;
+	LibListMethod_List_1_List      head;
 	LibListMethod_List_1_List      last;
 	LibListMethod_int_0            destroy;
 } ListHelper;
@@ -103,6 +104,7 @@ typedef struct
 		(void*)&ListHelper_new_list,			\
 			(void*)&ListHelper_find_by_tag,		\
 			(void*)&ListHelper_reverse,			\
+			(void*)&ListHelper_head,			\
 			(void*)&ListHelper_last,			\
 			(void*)&ListHelper_destroy,			\
 }

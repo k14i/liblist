@@ -33,7 +33,6 @@ err:
 
 clean_up_and_return:
 	list_helper->destroy_list(list_helper, list);
-	printf("list = %p\n", list);
 	(void)list_helper->destroy(list_helper);
 	return ret;
 }
@@ -88,6 +87,33 @@ err:
 clean_up_and_return:
 	list_helper->destroy_list(list_helper, list0);
 	//list_helper->destroy_list(list_helper, list1);
+	(void)list_helper->destroy(list_helper);
+	return ret;
+}
+
+int test_head() {
+	int ret = 0;
+
+	ListHelper *list_helper = newListHelper();
+	List *list0 = list_helper->new_list(list_helper);
+	List *list1 = list_helper->new_list(list_helper);
+	List *list2 = list_helper->new_list(list_helper);
+	list0->next = list1;
+	list1->prev = list0;
+	list1->next = list2;
+	list2->prev = list1;
+
+	List *head = list_helper->head(list_helper, list2);
+	if (head != list0) goto err;
+
+	goto clean_up_and_return;
+
+err:
+	ret = 1;
+	goto clean_up_and_return;
+
+clean_up_and_return:
+	list_helper->destroy_list(list_helper, list0);
 	(void)list_helper->destroy(list_helper);
 	return ret;
 }
@@ -242,6 +268,11 @@ int main(int argc, char *argv[]) {
 	ret = test_destroy_list();
 	if (ret != 0) {
 		printf("ERROR in test_destroy_list()\n");
+		goto err;
+	}
+	ret = test_head();
+	if (ret != 0) {
+		printf("ERROR in test_head()\n");
 		goto err;
 	}
 	ret = test_last();
