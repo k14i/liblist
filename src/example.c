@@ -6,6 +6,50 @@
 
 #define TIMES 1
 
+int test_set_prev() {
+	int ret = 0;
+
+	ListHelper *list_helper = newListHelper();
+	List *list0 = list_helper->new_list(list_helper);
+	List *list1 = list_helper->new_list(list_helper);
+	list1->set_prev(list1, list0);
+
+	if (list0->next != list1 || list1->prev != list0) goto err;
+
+	goto clean_up_and_return;
+
+err:
+	ret = 1;
+	goto clean_up_and_return;
+
+clean_up_and_return:
+	list_helper->destroy_list(list_helper, list0);
+	(void)list_helper->destroy(list_helper);
+	return ret;
+}
+
+int test_set_next() {
+	int ret = 0;
+
+	ListHelper *list_helper = newListHelper();
+	List *list0 = list_helper->new_list(list_helper);
+	List *list1 = list_helper->new_list(list_helper);
+	list0->set_next(list0, list1);
+
+	if (list0->next != list1 || list1->prev != list0) goto err;
+
+	goto clean_up_and_return;
+
+err:
+	ret = 1;
+	goto clean_up_and_return;
+
+clean_up_and_return:
+	list_helper->destroy_list(list_helper, list0);
+	(void)list_helper->destroy(list_helper);
+	return ret;
+}
+
 int test_new_linked_list() {
 	int ret = 0;
 
@@ -260,6 +304,16 @@ int main(int argc, char *argv[]) {
 	int exit_status = 0;
 
 	printf("---- BEGIN main() ----\n");
+	ret = test_set_prev();
+	if (ret != 0) {
+		printf("ERROR in test_prev()\n");
+		goto err;
+	}
+	ret = test_set_next();
+	if (ret != 0) {
+		printf("ERROR in test_next()\n");
+		goto err;
+	}
 	ret = test_new_linked_list();
 	if (ret != 0) {
 		printf("ERROR in test_new_linked_list()\n");

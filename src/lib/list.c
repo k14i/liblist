@@ -31,6 +31,8 @@
  * List Object
  */
 
+static int List_set_prev(List *self, List *target);
+static int List_set_next(List *self, List *target);
 static int List_join(List *self, List *target);
 static int List_add(List *self, List *target);
 static int List_set_tag(List *self, int tag);
@@ -44,13 +46,39 @@ static int List_initialize(List *self);
 static int List_destroy(List *self);
 
 
+static int List_set_prev(List *self, List *target) {
+	if (!self || !target || self->prev || target->prev) goto err;
+	List *ptr = self;
+
+	ptr->prev = target;
+	ptr = ptr->prev;
+	ptr->next = self;
+
+	return LIBLIST_RETVAL_SUCCESS;
+
+err:
+	return LIBLIST_RETVAL_FAILED;
+}
+
+static int List_set_next(List *self, List *target) {
+	if (!self || !target || self->next) goto err;
+	List *ptr = self;
+
+	ptr->next = target;
+	ptr = ptr->next;
+	ptr->prev = self;
+
+	return LIBLIST_RETVAL_SUCCESS;
+
+err:
+	return LIBLIST_RETVAL_FAILED;
+}
+
 static int List_join(List *self, List *target) {
 	if (!self || self->prev || !target) goto err;
 
-	List *ptr      = NULL;
+	List *ptr      = self;
 	List *ptr_prev = NULL;
-
-	ptr = self;
 
 	if (ptr->prev) goto err;
 
