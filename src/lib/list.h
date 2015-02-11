@@ -92,7 +92,7 @@ typedef List *(*LibListMethod_List_1_List)(void*, List *list);
 
 typedef struct
 {
-	LibListMethod_int_1_List       destroy_list;
+//	LibListMethod_int_1_List       destroy_list;
 	LibListMethod_List_1_int       new_linked_list;
 	LibListMethod_List_0           new_list;
 	LibListMethod_List_2_List_int  find_by_tag;
@@ -103,7 +103,6 @@ typedef struct
 } ListHelper;
 
 #define ListHelperElements {					\
-		(void*)&ListHelper_destroy_list,		\
 		(void*)&ListHelper_new_linked_list,			\
 		(void*)&ListHelper_new_list,			\
 			(void*)&ListHelper_find_by_tag,		\
@@ -112,6 +111,8 @@ typedef struct
 			(void*)&ListHelper_last,			\
 			(void*)&ListHelper_destroy,			\
 }
+
+//		(void*)&ListHelper_destroy_list,		\
 
 ListHelper *newListHelper();
 
