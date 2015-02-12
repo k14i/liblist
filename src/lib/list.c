@@ -107,7 +107,9 @@ static int List_join(List *self, List *target) {
 	return LIBLIST_RETVAL_SUCCESS;
 
 err:
-	printf("List_join: self->prev should be NULL.\n");
+#ifdef DEBUG
+printf("List_join: self->prev should be NULL.\n");
+#endif
 	return LIBLIST_RETVAL_FAILED;
 }
 
@@ -125,7 +127,9 @@ static int List_add(List *self, List *target) {
 	return LIBLIST_RETVAL_SUCCESS;
 
 err:
-	printf("List_add: self->prev should be NULL.\n");
+#ifdef DEBUG
+printf("List_add: self->prev should be NULL.\n");
+#endif
 	return LIBLIST_RETVAL_FAILED;
 }
 
@@ -145,7 +149,9 @@ static int List_add_tag(List *self, int tag) {
 	return LIBLIST_RETVAL_SUCCESS;
 
 err:
-	printf("List_add_tag: self->prev should be NULL.\n");
+#ifdef DEBUG
+printf("List_add_tag: self->prev should be NULL.\n");
+#endif
 	return LIBLIST_RETVAL_FAILED;
 }
 
@@ -163,7 +169,9 @@ static int List_add_with_tag(List *self, void *target, int tag) {
 	return LIBLIST_RETVAL_SUCCESS;
 
 err:
-	printf("List_add_with_tag: self->prev should be NULL.\n");
+#ifdef DEBUG
+printf("List_add_with_tag: self->prev should be NULL.\n");
+#endif
 	return LIBLIST_RETVAL_FAILED;
 }
 
@@ -182,7 +190,9 @@ static int List_terminate(List *self) {
 	return LIBLIST_RETVAL_SUCCESS;
 
 err:
-	printf("List_terminate: self->prev should be NULL.\n");
+#ifdef DEBUG
+printf("List_terminate: self->prev should be NULL.\n");
+#endif
 	return LIBLIST_RETVAL_FAILED;
 }
 
@@ -195,7 +205,9 @@ static int List_dump(List *self, List *list) {
 	return LIBLIST_RETVAL_SUCCESS;
 
 err:
-	printf("List_dump: list should not be NULL.\n");
+#ifdef DEBUG
+printf("List_dump: list should not be NULL.\n");
+#endif
 	return LIBLIST_RETVAL_FAILED;
 }
 
@@ -218,7 +230,9 @@ static int List_foreach(List *self, void *function, void *arg) {
 	return LIBLIST_RETVAL_SUCCESS;
 
 err:
-	printf("List_foreach: self->prev should be NULL.\n");
+#ifdef DEBUG
+printf("List_foreach: self->prev should be NULL.\n");
+#endif
 	return LIBLIST_RETVAL_FAILED;
 }
 
@@ -235,7 +249,9 @@ static int List_length(List *self) {
 	return len;
 
 err:
-	printf("List_length: self->prev should be NULL.\n");
+#ifdef DEBUG
+printf("List_length: self->prev should be NULL.\n");
+#endif
 	return -1;
 }
 
@@ -247,7 +263,9 @@ static int List_initialize(List *self) {
 	return LIBLIST_RETVAL_SUCCESS;
 
 err:
-	printf("List_initialize: list should not be NULL.\n");
+#ifdef DEBUG
+printf("List_initialize: list should not be NULL.\n");
+#endif
 	return LIBLIST_RETVAL_FAILED;
 }
 
@@ -263,20 +281,32 @@ static int List_destroy(List *self) {
 
 	while (ptr != self && ptr->prev) {
 		//if (!ptr->prev) break;
+#ifdef DEBUG
 printf("List_destroy: 1: ptr = %p, ptr->prev = %p, ptr->next = %p\n", ptr, ptr->prev, ptr->next);
+#endif
 		ptr = ptr->prev;
+#ifdef DEBUG
 printf("List_destroy: 2: ptr = %p, ptr->prev = %p, ptr->next = %p\n", ptr, ptr->prev, ptr->next);
+#endif
 		ptr_next = ptr->next;
+#ifdef DEBUG
 printf("List_destroy: 3: ptr = %p, ptr->prev = %p, ptr->next = %p\n", ptr, ptr->prev, ptr->next);
+#endif
 		memset(ptr_next, 0, sizeof(ptr_next));
 		free(ptr_next);
+#ifdef DEBUG
 printf("List_destroy: 4: ptr = %p, ptr->prev = %p, ptr->next = %p\n", ptr, ptr->prev, ptr->next);
 printf("List_destroy: 5: ptr = %p, ptr->prev = %p, ptr->next = %p\n", ptr, ptr->prev, ptr->next);
+#endif
 		//if (!ptr->prev) break;
 		//ptr = ptr->prev;
+#ifdef DEBUG
 printf("List_destroy: 6: ptr = %p, ptr->prev = %p, ptr->next = %p\n", ptr, ptr->prev, ptr->next);
+#endif
 	}
+#ifdef DEBUG
 printf("List_destroy: 7: ptr = %p, ptr->prev = %p, ptr->next = %p\n", ptr, ptr->prev, ptr->next);
+#endif
 
 	goto destroy_self;
 
@@ -295,7 +325,9 @@ destroy_self:
 	return LIBLIST_RETVAL_SUCCESS;
 
 err:
-	printf("List_destroy: list should not be NULL.\n");
+#ifdef DEBUG
+printf("List_destroy: list should not be NULL.\n");
+#endif
 	return LIBLIST_RETVAL_FAILED;
 }
 
@@ -352,7 +384,9 @@ static List *ListHelper_new_linked_list(ListHelper *self, int size) {
 	return head;
 
 err:
-	printf("ListHelper_new_linked_list: self should not be NULL and size should not lower than 1.\n");
+#ifdef DEBUG
+printf("ListHelper_new_linked_list: self should not be NULL and size should not lower than 1.\n");
+#endif
 	return NULL;
 }
 
@@ -365,7 +399,9 @@ static List *ListHelper_new_list(ListHelper *self) {
 	return buf;
 
 err:
-	printf("ListHelper_new_list: self should not be NULL.\n");
+#ifdef DEBUG
+printf("ListHelper_new_list: self should not be NULL.\n");
+#endif
 	return NULL;
 }
 
@@ -378,7 +414,9 @@ static List *ListHelper_head(ListHelper *self, List *list) {
 	return ptr;
 
 err:
-	printf("ListHelper_head: self or list should not be NULL.\n");
+#ifdef DEBUG
+printf("ListHelper_head: self or list should not be NULL.\n");
+#endif
 	return NULL;
 }
 
@@ -393,7 +431,9 @@ static List *ListHelper_last(ListHelper *self, List *list) {
 	return ptr;
 
 err:
-	printf("ListHelper_last: self should not be NULL.\n");
+#ifdef DEBUG
+printf("ListHelper_last: self should not be NULL.\n");
+#endif
 	return NULL;
 }
 
@@ -410,7 +450,9 @@ static List *ListHelper_find_by_tag(ListHelper *self, List *list, int tag) {
 	return ptr;
 
 err:
-	printf("ListHelper_find_by_tag: self should not be NULL.\n");
+#ifdef DEBUG
+printf("ListHelper_find_by_tag: self should not be NULL.\n");
+#endif
 	return NULL;
 }
 
@@ -432,7 +474,9 @@ static List *ListHelper_reverse(ListHelper *self, List *list) {
 	return list;
 
 err:
-	printf("ListHelper_reverse: error\n");
+#ifdef DEBUG
+printf("ListHelper_reverse: error\n");
+#endif
 	return NULL;
 }
 
@@ -444,7 +488,9 @@ static int ListHelper_destroy(ListHelper *self) {
 	return LIBLIST_RETVAL_SUCCESS;
 
 err:
-	printf("ListHelper_destroy: self should not be NULL.\n");
+#ifdef DEBUG
+printf("ListHelper_destroy: self should not be NULL.\n");
+#endif
 	return LIBLIST_RETVAL_FAILED;
 }
 

@@ -64,15 +64,25 @@ int test_new_linked_list() {
 	List *list = list_helper->new_linked_list(list_helper, 5);
 	ptr = list;
 	if (!list) goto err;
-	printf("list = %p, ptr = %p, ptr->prev = %p, ptr->next = %p\n", list, ptr, ptr->prev, ptr->next);
+#ifdef DEBUG
+printf("list = %p, ptr = %p, ptr->prev = %p, ptr->next = %p\n", list, ptr, ptr->prev, ptr->next);
+#endif
 	ptr = ptr->next;
-	printf("list = %p, ptr = %p, ptr->prev = %p, ptr->next = %p\n", list, ptr, ptr->prev, ptr->next);
+#ifdef DEBUG
+printf("list = %p, ptr = %p, ptr->prev = %p, ptr->next = %p\n", list, ptr, ptr->prev, ptr->next);
+#endif
 	ptr = ptr->next;
-	printf("list = %p, ptr = %p, ptr->prev = %p, ptr->next = %p\n", list, ptr, ptr->prev, ptr->next);
+#ifdef DEBUG
+printf("list = %p, ptr = %p, ptr->prev = %p, ptr->next = %p\n", list, ptr, ptr->prev, ptr->next);
+#endif
 	ptr = ptr->next;
-	printf("list = %p, ptr = %p, ptr->prev = %p, ptr->next = %p\n", list, ptr, ptr->prev, ptr->next);
+#ifdef DEBUG
+printf("list = %p, ptr = %p, ptr->prev = %p, ptr->next = %p\n", list, ptr, ptr->prev, ptr->next);
+#endif
 	ptr = ptr->next;
-	printf("list = %p, ptr = %p, ptr->prev = %p, ptr->next = %p\n", list, ptr, ptr->prev, ptr->next);
+#ifdef DEBUG
+printf("list = %p, ptr = %p, ptr->prev = %p, ptr->next = %p\n", list, ptr, ptr->prev, ptr->next);
+#endif
 	if (ptr->next) goto err;
 
 	goto clean_up_and_return;
@@ -93,20 +103,30 @@ int test_join() {
 
 	ListHelper *list_helper = newListHelper();
 	List *list0 = list_helper->new_list(list_helper);
+#ifdef DEBUG
 printf("list0 = %p, list0->prev = %p, list0->next = %p\n", list0, list0->prev, list0->next);
+#endif
 	List *list1 = list_helper->new_list(list_helper);
+#ifdef DEBUG
 printf("list1 = %p, list1->prev = %p, list1->next = %p\n", list1, list1->prev, list1->next);
+#endif
 	List *list2 = list_helper->new_list(list_helper);
+#ifdef DEBUG
 printf("list2 = %p, list2->prev = %p, list2->next = %p\n", list2, list2->prev, list2->next);
+#endif
 	List *list_last = list_helper->new_list(list_helper);
+#ifdef DEBUG
 printf("list_last = %p, list_last->prev = %p, list_last->next = %p\n", list_last, list_last->prev, list_last->next);
+#endif
 	list0->join(list0, list1);
 	list0->join(list0, list2);
 	list0->join(list0, list_last);
+#ifdef DEBUG
 printf("list0 = %p, list0->prev = %p, list0->next = %p\n", list0, list0->prev, list0->next);
 printf("list1 = %p, list1->prev = %p, list1->next = %p\n", list1, list1->prev, list1->next);
 printf("list2 = %p, list2->prev = %p, list2->next = %p\n", list2, list2->prev, list2->next);
 printf("list_last = %p, list_last->prev = %p, list_last->next = %p\n", list_last, list_last->prev, list_last->next);
+#endif
 
 	List *ret_last = list_helper->last(list_helper, list0);
 
@@ -202,7 +222,9 @@ err:
 
 clean_up_and_return:
 	//list_helper->destroy_list(list_helper, list);
+#ifdef DEBUG
 printf("list = %p, list->prev = %p, list->next = %p\n", list, list->prev, list->next);
+#endif
 	list->destroy(list);
 	(void)list_helper->destroy(list_helper);
 	return ret;
@@ -263,7 +285,9 @@ err:
 
 clean_up_and_return:
 	//list_helper->destroy_list(list_helper, list);
+#ifdef DEBUG
 printf("list = %p, list->prev = %p, list->next = %p\n", list, list->prev, list->next);
+#endif
 	list->destroy(list);
 	(void)list_helper->destroy(list_helper);
 	return ret;
@@ -302,26 +326,38 @@ int test_reverse() {
 
 	ListHelper *list_helper = newListHelper();
 	List *list0 = list_helper->new_list(list_helper);
+#ifdef DEBUG
 printf("list0 = %p, list0->prev = %p, list0->next = %p\n", list0, list0->prev, list0->next);
+#endif
 	List *list1 = list_helper->new_list(list_helper);
+#ifdef DEBUG
 printf("list1 = %p, list1->prev = %p, list1->next = %p\n", list1, list1->prev, list1->next);
+#endif
 	List *list2 = list_helper->new_list(list_helper);
+#ifdef DEBUG
 printf("list2 = %p, list2->prev = %p, list2->next = %p\n", list2, list2->prev, list2->next);
+#endif
 	List *list3 = list_helper->new_list(list_helper);
+#ifdef DEBUG
 printf("list3 = %p, list3->prev = %p, list3->next = %p\n", list3, list3->prev, list3->next);
+#endif
 	list0->join(list0, list1);
 	list0->join(list0, list2);
 	list0->join(list0, list3);
+#ifdef DEBUG
 printf("list0 = %p, list0->prev = %p, list0->next = %p\n", list0, list0->prev, list0->next);
 printf("list1 = %p, list1->prev = %p, list1->next = %p\n", list1, list1->prev, list1->next);
 printf("list2 = %p, list2->prev = %p, list2->next = %p\n", list2, list2->prev, list2->next);
 printf("list3 = %p, list3->prev = %p, list3->next = %p\n", list3, list3->prev, list3->next);
+#endif
 	List *list = list_helper->reverse(list_helper, list0);
+#ifdef DEBUG
 printf("list = %p, list->prev = %p, list->next = %p\n", list, list->prev, list->next);
 printf("list0 = %p, list0->prev = %p, list0->next = %p\n", list0, list0->prev, list0->next);
 printf("list1 = %p, list1->prev = %p, list1->next = %p\n", list1, list1->prev, list1->next);
 printf("list2 = %p, list2->prev = %p, list2->next = %p\n", list2, list2->prev, list2->next);
 printf("list3 = %p, list3->prev = %p, list3->next = %p\n", list3, list3->prev, list3->next);
+#endif
 	if (ret != 0) goto err;
 
 	goto clean_up_and_return;
@@ -333,11 +369,15 @@ err:
 clean_up_and_return:
 	//list_helper->destroy_list(list_helper, list0);
 	//list0->destroy(list0);
+#ifdef DEBUG
 printf("list = %p\n", list);
+#endif
 	list->destroy(list);
 	//free(list0);
 	//list_helper->destroy_list(list_helper, list);
+#ifdef DEBUG
 printf("list = %p\n", list);
+#endif
 	(void)list_helper->destroy(list_helper);
 	return ret;
 }
