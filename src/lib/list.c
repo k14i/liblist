@@ -364,6 +364,13 @@ err:
 }
 */
 
+
+/**
+ * @file list.c
+ * @brief ListHelper.new_linked_list
+ * @author Keisuke Takahashi
+ * @return struct List *
+ */
 static List *ListHelper_new_linked_list(ListHelper *self, int size) {
 	if (!self || size < 1) goto err;
 
@@ -390,6 +397,13 @@ printf("ListHelper_new_linked_list: self should not be NULL and size should not 
 	return NULL;
 }
 
+
+/**
+ * @file list.c
+ * @brief ListHelper.new_list
+ * @author Keisuke Takahashi
+ * @return struct List *
+ */
 static List *ListHelper_new_list(ListHelper *self) {
 	if (!self) goto err;
 
@@ -405,6 +419,13 @@ printf("ListHelper_new_list: self should not be NULL.\n");
 	return NULL;
 }
 
+
+/**
+ * @file list.c
+ * @brief ListHelper.head
+ * @author Keisuke Takahashi
+ * @return struct List *
+ */
 static List *ListHelper_head(ListHelper *self, List *list) {
 	if (!self || !list) goto err;
 
@@ -420,6 +441,13 @@ printf("ListHelper_head: self or list should not be NULL.\n");
 	return NULL;
 }
 
+
+/**
+ * @file list.c
+ * @brief ListHelper.last
+ * @author Keisuke Takahashi
+ * @return struct List *
+ */
 static List *ListHelper_last(ListHelper *self, List *list) {
 	if (!self || !list) goto err;
 
@@ -437,6 +465,13 @@ printf("ListHelper_last: self should not be NULL.\n");
 	return NULL;
 }
 
+
+/**
+ * @file list.c
+ * @brief ListHelper.find_by_tag
+ * @author Keisuke Takahashi
+ * @return struct List *
+ */
 static List *ListHelper_find_by_tag(ListHelper *self, List *list, int tag) {
 	if (!self || !list) goto err;
 
@@ -456,6 +491,13 @@ printf("ListHelper_find_by_tag: self should not be NULL.\n");
 	return NULL;
 }
 
+
+/**
+ * @file list.c
+ * @brief ListHelper.reverse
+ * @author Keisuke Takahashi
+ * @return struct List *
+ */
 static List *ListHelper_reverse(ListHelper *self, List *list) {
 	if (!self || !list || list->prev) goto err;
 
@@ -480,6 +522,14 @@ printf("ListHelper_reverse: error\n");
 	return NULL;
 }
 
+
+/**
+ * @file list.c
+ * @brief ListHelper.destroy
+ * @author Keisuke Takahashi
+ * @return LIBLIST_RETVAL_SUCCESS
+ * @return LIBLIST_RETVAL_FAILED
+ */
 static int ListHelper_destroy(ListHelper *self) {
 	if (!self) goto err;
 
@@ -494,6 +544,13 @@ printf("ListHelper_destroy: self should not be NULL.\n");
 	return LIBLIST_RETVAL_FAILED;
 }
 
+
+/**
+ * @file list.c
+ * @brief newListHelper
+ * @author Keisuke Takahashi
+ * @return struct ListHelper *
+ */
 ListHelper *newListHelper() {
 	void *buf = malloc(sizeof(ListHelper));
 	if (!buf) goto err;
