@@ -46,6 +46,13 @@ static int List_initialize(List *self);
 static int List_destroy(List *self);
 
 
+/**
+ * @file list.c
+ * @brief List.set_prev
+ * @author Keisuke Takahashi
+ * @return LIBLIST_RETVAL_SUCCESS
+ * @return LIBLIST_RETVAL_FAILED
+ */
 static int List_set_prev(List *self, List *target) {
 	if (!self || !target || self->prev || target->prev) goto err;
 	List *ptr = self;
@@ -60,20 +67,17 @@ err:
 	return LIBLIST_RETVAL_FAILED;
 }
 
+
+/**
+ * @file list.c
+ * @brief List.set_next
+ * @author Keisuke Takahashi
+ * @return LIBLIST_RETVAL_SUCCESS
+ * @return LIBLIST_RETVAL_FAILED
+ */
 static int List_set_next(List *self, List *target) {
 	if (!self || !target || self->next) goto err;
-	//if (!self || !target) goto err;
 	List *ptr = self;
-
-	/*
-	if (ptr->next) {
-		List *ptr_next = ptr->next;
-		printf("0001: ptr_next = %p\n", ptr_next);
-		ptr_next->foreach(ptr_next, &(ptr_next->destroy), NULL);
-		printf("0002\n");
-		ptr->next = NULL;
-	}
-	*/
 
 	ptr->next = target;
 	ptr = ptr->next;
@@ -85,6 +89,14 @@ err:
 	return LIBLIST_RETVAL_FAILED;
 }
 
+
+/**
+ * @file list.c
+ * @brief List.join
+ * @author Keisuke Takahashi
+ * @return LIBLIST_RETVAL_SUCCESS
+ * @return LIBLIST_RETVAL_FAILED
+ */
 static int List_join(List *self, List *target) {
 	if (!self || self->prev || !target) goto err;
 
@@ -101,8 +113,6 @@ static int List_join(List *self, List *target) {
 
 	ptr->next = target;
 
-	//ptr = ptr->next;
-	//ptr->prev = self;
 	target->prev = ptr;
 	return LIBLIST_RETVAL_SUCCESS;
 
@@ -113,6 +123,14 @@ printf("List_join: self->prev should be NULL.\n");
 	return LIBLIST_RETVAL_FAILED;
 }
 
+
+/**
+ * @file list.c
+ * @brief List.add
+ * @author Keisuke Takahashi
+ * @return LIBLIST_RETVAL_SUCCESS
+ * @return LIBLIST_RETVAL_FAILED
+ */
 static int List_add(List *self, List *target) {
 	if (!self || self->prev || !target) goto err;
 
@@ -133,11 +151,35 @@ printf("List_add: self->prev should be NULL.\n");
 	return LIBLIST_RETVAL_FAILED;
 }
 
+
+/**
+ * @file list.c
+ * @brief List.set_tag
+ * @author Keisuke Takahashi
+ * @return LIBLIST_RETVAL_SUCCESS
+ * @return LIBLIST_RETVAL_FAILED
+ */
 static int List_set_tag(List *self, int tag) {
+	if (!self) goto err;
+
 	self->tag = tag;
 	return LIBLIST_RETVAL_SUCCESS;
+
+err:
+#ifdef DEBUG
+printf("List_set_tag: self should be NULL.\n");
+#endif
+	return LIBLIST_RETVAL_FAILED;
 }
 
+
+/**
+ * @file list.c
+ * @brief List.add_tag
+ * @author Keisuke Takahashi
+ * @return LIBLIST_RETVAL_SUCCESS
+ * @return LIBLIST_RETVAL_FAILED
+ */
 static int List_add_tag(List *self, int tag) {
 	if (!self || self->prev) goto err;
 
@@ -155,6 +197,14 @@ printf("List_add_tag: self->prev should be NULL.\n");
 	return LIBLIST_RETVAL_FAILED;
 }
 
+
+/**
+ * @file list.c
+ * @brief List.add_with_tag
+ * @author Keisuke Takahashi
+ * @return LIBLIST_RETVAL_SUCCESS
+ * @return LIBLIST_RETVAL_FAILED
+ */
 static int List_add_with_tag(List *self, void *target, int tag) {
 	if (!self || self->prev || !target) goto err;
 
@@ -175,6 +225,14 @@ printf("List_add_with_tag: self->prev should be NULL.\n");
 	return LIBLIST_RETVAL_FAILED;
 }
 
+
+/**
+ * @file list.c
+ * @brief List.terminate
+ * @author Keisuke Takahashi
+ * @return LIBLIST_RETVAL_SUCCESS
+ * @return LIBLIST_RETVAL_FAILED
+ */
 static int List_terminate(List *self) {
 	if (!self || self->prev) goto err;
 
@@ -196,6 +254,14 @@ printf("List_terminate: self->prev should be NULL.\n");
 	return LIBLIST_RETVAL_FAILED;
 }
 
+
+/**
+ * @file list.c
+ * @brief List.dump
+ * @author Keisuke Takahashi
+ * @return LIBLIST_RETVAL_SUCCESS
+ * @return LIBLIST_RETVAL_FAILED
+ */
 static int List_dump(List *self, List *list) {
 	if (!self || !list) goto err;
 
@@ -211,6 +277,14 @@ printf("List_dump: list should not be NULL.\n");
 	return LIBLIST_RETVAL_FAILED;
 }
 
+
+/**
+ * @file list.c
+ * @brief List.foreach
+ * @author Keisuke Takahashi
+ * @return LIBLIST_RETVAL_SUCCESS
+ * @return LIBLIST_RETVAL_FAILED
+ */
 static int List_foreach(List *self, void *function, void *arg) {
 	if (!self || self->prev || !function) goto err;
 
@@ -236,6 +310,14 @@ printf("List_foreach: self->prev should be NULL.\n");
 	return LIBLIST_RETVAL_FAILED;
 }
 
+
+/**
+ * @file list.c
+ * @brief List.length
+ * @author Keisuke Takahashi
+ * @return int len
+ * @return int -1
+ */
 static int List_length(List *self) {
 	if (!self || self->prev) goto err;
 
@@ -255,6 +337,14 @@ printf("List_length: self->prev should be NULL.\n");
 	return -1;
 }
 
+
+/**
+ * @file list.c
+ * @brief List.initialize
+ * @author Keisuke Takahashi
+ * @return LIBLIST_RETVAL_SUCCESS
+ * @return LIBLIST_RETVAL_FAILED
+ */
 static int List_initialize(List *self) {
 	if (!self) goto err;
 
@@ -269,6 +359,14 @@ printf("List_initialize: list should not be NULL.\n");
 	return LIBLIST_RETVAL_FAILED;
 }
 
+
+/**
+ * @file list.c
+ * @brief List.destroy
+ * @author Keisuke Takahashi
+ * @return LIBLIST_RETVAL_SUCCESS
+ * @return LIBLIST_RETVAL_FAILED
+ */
 static int List_destroy(List *self) {
 	if (!self) goto err;
 
@@ -280,7 +378,6 @@ static int List_destroy(List *self) {
 	if (!ptr->prev) goto destroy_self;
 
 	while (ptr != self && ptr->prev) {
-		//if (!ptr->prev) break;
 #ifdef DEBUG
 printf("List_destroy: 1: ptr = %p, ptr->prev = %p, ptr->next = %p\n", ptr, ptr->prev, ptr->next);
 #endif
@@ -298,8 +395,6 @@ printf("List_destroy: 3: ptr = %p, ptr->prev = %p, ptr->next = %p\n", ptr, ptr->
 printf("List_destroy: 4: ptr = %p, ptr->prev = %p, ptr->next = %p\n", ptr, ptr->prev, ptr->next);
 printf("List_destroy: 5: ptr = %p, ptr->prev = %p, ptr->next = %p\n", ptr, ptr->prev, ptr->next);
 #endif
-		//if (!ptr->prev) break;
-		//ptr = ptr->prev;
 #ifdef DEBUG
 printf("List_destroy: 6: ptr = %p, ptr->prev = %p, ptr->next = %p\n", ptr, ptr->prev, ptr->next);
 #endif
@@ -309,15 +404,6 @@ printf("List_destroy: 7: ptr = %p, ptr->prev = %p, ptr->next = %p\n", ptr, ptr->
 #endif
 
 	goto destroy_self;
-
-	/*
-	free(self);
-	memset(self, 0, sizeof(self));
-	//if(self->data) free(self->data);
-	//if(self->next) free(self->next);
-	//memset(self, 0, sizeof(List));
-	return LIBLIST_RETVAL_SUCCESS;
-	*/
 
 destroy_self:
 	free(self);
@@ -336,7 +422,6 @@ printf("List_destroy: list should not be NULL.\n");
  * ListHelper Object
  */
 
-//static int ListHelper_destroy_list(ListHelper *self, List *list);
 static List *ListHelper_new_linked_list(ListHelper *self, int size);
 static List *ListHelper_new_list(ListHelper *self);
 static List *ListHelper_head(ListHelper *self, List *list);
@@ -344,26 +429,6 @@ static List *ListHelper_last(ListHelper *self, List *list);
 static List *ListHelper_find_by_tag(ListHelper *self, List *list, int tag);
 static List *ListHelper_reverse(ListHelper *self, List *list);
 static int ListHelper_destroy(ListHelper *self);
-
-/*
-// TODO: Delete all the list recursively.
-static int ListHelper_destroy_list(ListHelper *self, List *list) {
-	if (!self || !list) goto err;
-
-	List *ptr = self->last(self, list);
-	while (ptr->prev) {
-		ptr = ptr->prev;
-		ptr->destroy(ptr->next);
-	}
-	ptr->destroy(ptr);
-	return LIBLIST_RETVAL_SUCCESS;
-
-err:
-	printf("ListHelper_destroy_list: list should not be NULL.\n");
-	return LIBLIST_RETVAL_FAILED;
-}
-*/
-
 
 /**
  * @file list.c
@@ -480,7 +545,6 @@ static List *ListHelper_find_by_tag(ListHelper *self, List *list, int tag) {
 	while (ptr->next) {
 		if(ptr->tag == tag) break;
 		ptr = ptr->next;
-		//continue;
 	}
 	return ptr;
 
@@ -510,7 +574,9 @@ static List *ListHelper_reverse(ListHelper *self, List *list) {
 		list->next = list_prev;
 		list->prev = list_next;
 		if (list->prev) list = list->prev;
-//printf("ListHelper_reverse: list = %p, list->prev = %p, list->next = %p\n", list, list->prev, list->next);
+#ifdef DEBUG
+printf("ListHelper_reverse: list = %p, list->prev = %p, list->next = %p\n", list, list->prev, list->next);
+#endif
 	} while (list->prev);
 
 	return list;
