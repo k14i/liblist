@@ -23,7 +23,6 @@ err:
 	goto clean_up_and_return;
 
 clean_up_and_return:
-	//list_helper->destroy_list(list_helper, list0);
 	list0->destroy(list0);
 	(void)list_helper->destroy(list_helper);
 	return ret;
@@ -35,10 +34,6 @@ int test_set_next() {
 	ListHelper *list_helper = newListHelper();
 	List *list0 = list_helper->new_list(list_helper);
 	List *list1 = list_helper->new_list(list_helper);
-	//List *list2 = list_helper->new_list(list_helper);
-	//List *list3 = list_helper->new_list(list_helper);
-	//list0->next = list2;
-	//list2->next = list3;
 	list0->set_next(list0, list1);
 
 	if (list0->next != list1 || list1->prev != list0) goto err;
@@ -50,7 +45,6 @@ err:
 	goto clean_up_and_return;
 
 clean_up_and_return:
-	//list_helper->destroy_list(list_helper, list0);
 	list0->destroy(list0);
 	(void)list_helper->destroy(list_helper);
 	return ret;
@@ -92,7 +86,6 @@ err:
 	goto clean_up_and_return;
 
 clean_up_and_return:
-	//list_helper->destroy_list(list_helper, list);
 	list->destroy(list);
 	(void)list_helper->destroy(list_helper);
 	return ret;
@@ -168,8 +161,6 @@ err:
 	goto clean_up_and_return;
 
 clean_up_and_return:
-	//list_helper->destroy_list(list_helper, list0);
-	//list_helper->destroy_list(list_helper, list1);
 	list0->destroy(list0);
 	(void)list_helper->destroy(list_helper);
 	return ret;
@@ -197,7 +188,6 @@ err:
 	goto clean_up_and_return;
 
 clean_up_and_return:
-	//list_helper->destroy_list(list_helper, list0);
 	list0->destroy(list0);
 	(void)list_helper->destroy(list_helper);
 	return ret;
@@ -221,7 +211,6 @@ err:
 	goto clean_up_and_return;
 
 clean_up_and_return:
-	//list_helper->destroy_list(list_helper, list);
 #ifdef DEBUG
 printf("list = %p, list->prev = %p, list->next = %p\n", list, list->prev, list->next);
 #endif
@@ -241,24 +230,10 @@ int test_foreach() {
 
 	list0->foreach(list0, &(list0->dump), NULL);
 
-	//list_helper->destroy_list(list_helper, list0);
 	list0->destroy(list0);
 	(void)list_helper->destroy(list_helper);
 	return ret;
 }
-
-/*
-int test_destroy_list() {
-	for (int i=0; i<TIMES; i++) {
-		ListHelper *list_helper = newListHelper();
-		List *list = list_helper->new_list(list_helper);
-		list_helper->destroy_list(list_helper, list);
-		// NOTE: 'warning: expression result unused [-Wunused-value]' without cast.
-		(void)list_helper->destroy(list_helper);
-	}
-	return 0;
-}
-*/
 
 int test_set_tag() {
 	int ret = 0;
@@ -284,7 +259,6 @@ err:
 	goto clean_up_and_return;
 
 clean_up_and_return:
-	//list_helper->destroy_list(list_helper, list);
 #ifdef DEBUG
 printf("list = %p, list->prev = %p, list->next = %p\n", list, list->prev, list->next);
 #endif
@@ -315,7 +289,6 @@ err:
 	goto clean_up_and_return;
 
 clean_up_and_return:
-	//list_helper->destroy_list(list_helper, list0);
 	list0->destroy(list0);
 	(void)list_helper->destroy(list_helper);
 	return ret;
@@ -367,14 +340,10 @@ err:
 	goto clean_up_and_return;
 
 clean_up_and_return:
-	//list_helper->destroy_list(list_helper, list0);
-	//list0->destroy(list0);
 #ifdef DEBUG
 printf("list = %p\n", list);
 #endif
 	list->destroy(list);
-	//free(list0);
-	//list_helper->destroy_list(list_helper, list);
 #ifdef DEBUG
 printf("list = %p\n", list);
 #endif
@@ -405,14 +374,6 @@ int main(int argc, char *argv[]) {
 		printf("ERROR in test_new_linked_list()\n");
 		goto err;
 	}
-	/*
-	printf("\ntest_destroy_list()\n");
-	ret = test_destroy_list();
-	if (ret != 0) {
-		printf("ERROR in test_destroy_list()\n");
-		goto err;
-	}
-	*/
 	printf("\ntest_head()\n");
 	ret = test_head();
 	if (ret != 0) {
