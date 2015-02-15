@@ -1,9 +1,18 @@
 lib_LTLIBRARIES = liblist.la
 
-noinst_HEADERS = liblist.la
+#noinst_HEADERS = liblist.la
+liblist_la_LDFLAGS = \
+					-module	\
+					-shared	\
+					-prefer-pic	\
+					-version-info 0:0:0	\
+					-rpath /usr/local/lib
+
 liblist_la_CFLAGS = \
 					-I../	\
 					-I../lib	\
+					-shared	\
+					-fPIC	\
 					$(CFLAGS)
 
 liblist_la_SOURCES = \
