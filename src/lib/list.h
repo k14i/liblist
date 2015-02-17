@@ -63,21 +63,24 @@ typedef struct
 	LibListMethod_int_0            destroy;
 } List;
 
-#define ListElements {							\
-		NULL, NULL, NULL, 0,					\
-		(void*)&List_set_prev,					\
-		(void*)&List_set_next,					\
-		(void*)&List_join,					\
-			(void*)&List_add,					\
-			(void*)&List_set_tag,				\
-			(void*)&List_add_tag,				\
-			(void*)&List_add_with_tag,			\
-			(void*)&List_terminate,				\
-			(void*)&List_dump,					\
-			(void*)&List_foreach,				\
-			(void*)&List_length,				\
-			(void*)&List_initialize,			\
-			(void*)&List_destroy,				\
+#define ListElements {			\
+	NULL,						\
+	NULL,						\
+	NULL,						\
+	0,							\
+	(void*)&List_set_prev,		\
+	(void*)&List_set_next,		\
+	(void*)&List_join,			\
+	(void*)&List_add,			\
+	(void*)&List_set_tag,		\
+	(void*)&List_add_tag,		\
+	(void*)&List_add_with_tag,	\
+	(void*)&List_terminate,		\
+	(void*)&List_dump,			\
+	(void*)&List_foreach,		\
+	(void*)&List_length,		\
+	(void*)&List_initialize,	\
+	(void*)&List_destroy,		\
 }
 
 
@@ -92,7 +95,6 @@ typedef List *(*LibListMethod_List_1_List)(void*, List *list);
 
 typedef struct
 {
-//	LibListMethod_int_1_List       destroy_list;
 	LibListMethod_List_1_int       new_linked_list;
 	LibListMethod_List_0           new_list;
 	LibListMethod_List_2_List_int  find_by_tag;
@@ -102,17 +104,15 @@ typedef struct
 	LibListMethod_int_0            destroy;
 } ListHelper;
 
-#define ListHelperElements {					\
-		(void*)&ListHelper_new_linked_list,			\
-		(void*)&ListHelper_new_list,			\
-			(void*)&ListHelper_find_by_tag,		\
-			(void*)&ListHelper_reverse,			\
-			(void*)&ListHelper_head,			\
-			(void*)&ListHelper_last,			\
-			(void*)&ListHelper_destroy,			\
+#define ListHelperElements {			\
+	(void*)&ListHelper_new_linked_list,	\
+	(void*)&ListHelper_new_list,		\
+	(void*)&ListHelper_find_by_tag,		\
+	(void*)&ListHelper_reverse,			\
+	(void*)&ListHelper_head,			\
+	(void*)&ListHelper_last,			\
+	(void*)&ListHelper_destroy,			\
 }
-
-//		(void*)&ListHelper_destroy_list,		\
 
 ListHelper *newListHelper();
 
